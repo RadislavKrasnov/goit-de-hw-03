@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+  spark:
+    image: bitnami/spark:latest
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "7077:7077"
+      - "8080:8080"
+    networks:
+      - spark-net
+
+  spark-worker:
+    image: bitnami/spark:latest
+    container_name: spark-worker
+    volumes:
+      - ./:/app
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+    depends_on:
+      - spark
+    networks:
+      - spark-net
+
+  pyspark:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        RUN apt-get update && apt-get install -y wget gnupg apt-transport-https curl procps && rm -rf /var/lib/apt/lists/*
+        RUN wget -O- https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | tee /usr/share/keyrings/adoptium.gpg \
+        && echo "deb [signed-by=/usr/share/keyrings/adoptium.gpg] https://packages.adoptium.net/artifactory/deb jammy main" > /etc/apt/sources.list.d/adoptium.list \
+        && apt-get update \
+        && apt-get install -y temurin-17-jdk \
+        && rm -rf /var/lib/apt/lists/*
+        ENV JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
+        ENV PATH="${JAVA_HOME}/bin:${PATH}"
+        RUN pip install --no-cache-dir pyspark==4.0.0
+        WORKDIR /app
+        CMD ["tail", "-f", "/dev/null"]
+    container_name: pyspark-client
+    volumes:
+      - ./:/app
+    depends_on:
+      - spark
+    networks:
+      - spark-net
+    ports:
+      - "4040:4040"
+
+networks:
+  spark-net:
+    driver: bridge
