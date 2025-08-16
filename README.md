@@ -1,41 +1,21 @@
-# RESULTS
-```
-+-----------+-----------+
-|   category|total_spent|
-+-----------+-----------+
-|     Sports|     1802.5|
-|       Home|     1523.5|
-|Electronics|     1174.8|
-|   Clothing|      790.3|
-|     Beauty|      459.9|
-+-----------+-----------+
+# RESULTS  
+### 1 Load products, users purchases  
+!["results"](./img/p_1_load_products.png)  
+!["results"](./img/p_1_load_purchases.png)  
+!["results"](./img/p_1_load_users.png)  
 
-+-----------+-----------------+
-|   category|total_spent_18_25|
-+-----------+-----------------+
-|       Home|            361.1|
-|     Sports|            310.5|
-|Electronics|            249.6|
-|   Clothing|            245.0|
-|     Beauty|             41.4|
-+-----------+-----------------+
+### 2 Clear N/A data  
+!["results"](./img/p_2_clean_products.png)  
+!["results"](./img/p_2_clean_users_purchases.png)  
 
-+-----------+-----------------+----------+
-|   category|total_spent_18_25|percentage|
-+-----------+-----------------+----------+
-|       Home|            361.1|      29.9|
-|     Sports|            310.5|     25.71|
-|Electronics|            249.6|     20.67|
-|   Clothing|            245.0|     20.29|
-|     Beauty|             41.4|      3.43|
-+-----------+-----------------+----------+
+### 3 Total spent by categories  
+!["results"](./img/p_3_total_spent.png)  
 
-+-----------+-----------------+----------+
-|   category|total_spent_18_25|percentage|
-+-----------+-----------------+----------+
-|       Home|            361.1|      29.9|
-|     Sports|            310.5|     25.71|
-|Electronics|            249.6|     20.67|
-+-----------+-----------------+----------+
+### 4 Total spent by categories for 18 - 25 y.o.  
+!["results"](./img/p_4_total_age_range.png)  
 
-```
+### 5 Category shares in total for 18 - 25 y.o.  
+!["results"](./img/p_5_total_share_age_range.png)  
+
+### 6 Top 3 category shares in total for 18 - 25 y.o.  
+!["results"](./img/p_6_total_share_top.png)  

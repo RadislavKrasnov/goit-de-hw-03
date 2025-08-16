@@ -13,6 +13,10 @@ users = spark.read.options(**{"header": True, "inferSchema": True}).csv(USERS_CS
 purchases = spark.read.options(**{"header": True, "inferSchema": True}).csv(PURCHASES_CSV)
 products = spark.read.options(**{"header": True, "inferSchema": True}).csv(PRODUCTS_CSV)
 
+users.show()
+purchases.show()
+products.show()
+
 # 2. Очистіть дані, видаляючи будь-які рядки з пропущеними значеннями.
 users_clean = users.na.drop()
 purchases_clean = purchases.na.drop()
@@ -20,6 +24,10 @@ products_clean = products.na.drop()
 
 purchases_clean = purchases_clean.withColumn("quantity", col("quantity").cast("double"))
 products_clean = products_clean.withColumn("price", col("price").cast("double"))
+
+users_clean.show()
+purchases_clean.show()
+products_clean.show()
 
 # 3. Визначте загальну суму покупок за кожною категорією продуктів.
 purchases_with_products = purchases_clean.join(products_clean, on="product_id", how="inner")
